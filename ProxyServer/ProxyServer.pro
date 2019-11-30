@@ -24,8 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    proxyserver.cpp \
+    requisicao.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    proxyserver.h \
+    requisicao.h
 
 FORMS    += mainwindow.ui

@@ -49,9 +49,13 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../ProxyServer/main.cpp \
-		../ProxyServer/mainwindow.cpp moc_mainwindow.cpp
+		../ProxyServer/mainwindow.cpp \
+		../ProxyServer/proxyserver.cpp \
+		../ProxyServer/requisicao.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		proxyserver.o \
+		requisicao.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -95,6 +99,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../ProxyServer/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -113,8 +118,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../ProxyServer/ProxyServer.pro ../ProxyServer/mainwindow.h ../ProxyServer/main.cpp \
-		../ProxyServer/mainwindow.cpp
+		../ProxyServer/ProxyServer.pro ../ProxyServer/mainwindow.h \
+		../ProxyServer/proxyserver.h \
+		../ProxyServer/requisicao.h ../ProxyServer/main.cpp \
+		../ProxyServer/mainwindow.cpp \
+		../ProxyServer/proxyserver.cpp \
+		../ProxyServer/requisicao.cpp
 QMAKE_TARGET  = ProxyServer
 DESTDIR       = 
 TARGET        = ProxyServer
@@ -168,6 +177,7 @@ Makefile: ../ProxyServer/ProxyServer.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -233,6 +243,7 @@ Makefile: ../ProxyServer/ProxyServer.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -269,8 +280,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProxyServer/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProxyServer/main.cpp ../ProxyServer/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProxyServer/mainwindow.h ../ProxyServer/proxyserver.h ../ProxyServer/requisicao.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProxyServer/main.cpp ../ProxyServer/mainwindow.cpp ../ProxyServer/proxyserver.cpp ../ProxyServer/requisicao.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../ProxyServer/mainwindow.ui $(DISTDIR)/
 
 
@@ -300,7 +311,8 @@ compiler_rcc_clean:
 compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../ProxyServer/mainwindow.h \
+moc_mainwindow.cpp: ../ProxyServer/proxyserver.h \
+		../ProxyServer/mainwindow.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/vinicius/Documentos/TR2/Proxy/ProxyServer -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../ProxyServer/mainwindow.h -o moc_mainwindow.cpp
 
@@ -323,12 +335,21 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: ../ProxyServer/main.cpp ../ProxyServer/mainwindow.h
+main.o: ../ProxyServer/main.cpp ../ProxyServer/mainwindow.h \
+		../ProxyServer/proxyserver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../ProxyServer/main.cpp
 
 mainwindow.o: ../ProxyServer/mainwindow.cpp ../ProxyServer/mainwindow.h \
+		../ProxyServer/proxyserver.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../ProxyServer/mainwindow.cpp
+
+proxyserver.o: ../ProxyServer/proxyserver.cpp ../ProxyServer/proxyserver.h \
+		../ProxyServer/requisicao.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o proxyserver.o ../ProxyServer/proxyserver.cpp
+
+requisicao.o: ../ProxyServer/requisicao.cpp ../ProxyServer/requisicao.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o requisicao.o ../ProxyServer/requisicao.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

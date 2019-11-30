@@ -33,6 +33,7 @@ public:
     QPushButton *pushButton_3;
     QTextEdit *textEdit;
     QTextEdit *textEdit_2;
+    QPushButton *pushButton_4;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -41,28 +42,31 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(1314, 684);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(20, 210, 83, 28));
+        pushButton->setGeometry(QRect(60, 560, 83, 28));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(150, 210, 83, 28));
+        pushButton_2->setGeometry(QRect(230, 560, 83, 28));
         pushButton_3 = new QPushButton(centralWidget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        pushButton_3->setGeometry(QRect(280, 210, 83, 28));
+        pushButton_3->setGeometry(QRect(420, 560, 83, 28));
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(20, 10, 104, 151));
+        textEdit->setGeometry(QRect(20, 10, 771, 531));
         textEdit_2 = new QTextEdit(centralWidget);
         textEdit_2->setObjectName(QStringLiteral("textEdit_2"));
-        textEdit_2->setGeometry(QRect(250, 9, 104, 151));
+        textEdit_2->setGeometry(QRect(1010, 10, 104, 151));
+        pushButton_4 = new QPushButton(centralWidget);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setGeometry(QRect(580, 560, 83, 28));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 25));
+        menuBar->setGeometry(QRect(0, 0, 1314, 25));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -82,6 +86,7 @@ public:
         pushButton->setText(QApplication::translate("MainWindow", "Butao 1", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Butao 2", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWindow", "Butao 3", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("MainWindow", "OpenC", Q_NULLPTR));
     } // retranslateUi
 
 };
