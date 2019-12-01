@@ -1,13 +1,13 @@
 #include "proxyserver.h"
 #include <QDebug>
 #include "requisicao.h"
-int server_fd, new_socket, sock, valread, valTotal=0;
+int server_fd, new_socket, sock, valread, valTotal=0, valread1;
 struct sockaddr_in address;
 struct sockaddr_in serv_addr;
 int opt = 1;
 int addrlen = sizeof(address);
 char buffer[maxBufferSize] = { 0 };
-char bufretorno[maxBufferSize+1];
+char bf[maxBufferSize+1] = { 0 };
 ssize_t size_read, size_cur;
 string Hname;
 string convertToIpv6( string str1) {
@@ -105,7 +105,8 @@ string proxy_server::abreConexaoBrowser(void) {
 }
 
 string proxy_server::enviaBrowser(string r1) {
-
+    //QString x1 = QString::fromUtf8(r1.c_str());
+    //qDebug() << x1;
         std::string h1, request;
         request = r1;
         if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -114,7 +115,7 @@ string proxy_server::enviaBrowser(string r1) {
             exit(1);
         }
         Requisicao rqst = Requisicao(r1);
-        string host = rqst.camposReq["Host:"];
+        string host = rqst.camposReq[0].second  ;
         h1 = convertToIpv6(host);
 
         const char *adr_array = h1.c_str();
@@ -142,22 +143,34 @@ string proxy_server::enviaBrowser(string r1) {
                 ser enviado junto o seu tamanho */
             send(sock, request.c_str(), request.length(), 0);
 
-            char bf[1];
-            valTotal = read(sock, &bf, sizeof(bf));
-            string resposta;
-            int bf_size;
-            bf_size = sizeof(bf)/sizeof(char);
+
+
             qDebug() << "aqui";
-            resposta = convertToString(bf, bf_size);
-            valTotal = read(sock, &bf, sizeof(bf));
-                while(valTotal > 0) {
-                    resposta.append(bf);
-                    valTotal = read(sock, &bf, sizeof(bf));
+            valread1 = read(sock, bf, maxBufferSize); //Blocked until message is sent from the server
+                valTotal += valread1;
+
+                while( valread1 = read(sock, bf+valTotal, ssize_t(maxBufferSize-valTotal) > 0 )) {
+                    valTotal += valread1;
+
                 }
+                valTotal += 0;
+                string resposta;
+                int bf_size;
+                bf_size = sizeof(bf)/sizeof(char);
+                resposta = convertToString(bf, bf_size);
             qDebug() << "fim";
-            QString str4 = QString::fromStdString(resposta);
-            qDebug() << str4;
+            //QString str4 = QString::fromStdString(resposta);
+            //qDebug() << str4;
+            shutdown(sock, 0);
+            close(sock);
+
             return resposta;
 }
 
+void proxy_server::respostaParaBrowser(string res) {
+    qDebug() << "Sending message";
+        send(new_socket, res.c_str(), res.length(), 0);
+    shutdown(new_socket, 0);
+    close(new_socket);
+}
 

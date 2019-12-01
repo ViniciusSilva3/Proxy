@@ -51,11 +51,13 @@ OBJECTS_DIR   = ./
 SOURCES       = ../ProxyServer/main.cpp \
 		../ProxyServer/mainwindow.cpp \
 		../ProxyServer/proxyserver.cpp \
-		../ProxyServer/requisicao.cpp moc_mainwindow.cpp
+		../ProxyServer/requisicao.cpp \
+		../ProxyServer/resposta.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		proxyserver.o \
 		requisicao.o \
+		resposta.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -120,10 +122,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../ProxyServer/ProxyServer.pro ../ProxyServer/mainwindow.h \
 		../ProxyServer/proxyserver.h \
-		../ProxyServer/requisicao.h ../ProxyServer/main.cpp \
+		../ProxyServer/requisicao.h \
+		../ProxyServer/resposta.h ../ProxyServer/main.cpp \
 		../ProxyServer/mainwindow.cpp \
 		../ProxyServer/proxyserver.cpp \
-		../ProxyServer/requisicao.cpp
+		../ProxyServer/requisicao.cpp \
+		../ProxyServer/resposta.cpp
 QMAKE_TARGET  = ProxyServer
 DESTDIR       = 
 TARGET        = ProxyServer
@@ -280,8 +284,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProxyServer/mainwindow.h ../ProxyServer/proxyserver.h ../ProxyServer/requisicao.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProxyServer/main.cpp ../ProxyServer/mainwindow.cpp ../ProxyServer/proxyserver.cpp ../ProxyServer/requisicao.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProxyServer/mainwindow.h ../ProxyServer/proxyserver.h ../ProxyServer/requisicao.h ../ProxyServer/resposta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProxyServer/main.cpp ../ProxyServer/mainwindow.cpp ../ProxyServer/proxyserver.cpp ../ProxyServer/requisicao.cpp ../ProxyServer/resposta.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../ProxyServer/mainwindow.ui $(DISTDIR)/
 
 
@@ -341,7 +345,8 @@ main.o: ../ProxyServer/main.cpp ../ProxyServer/mainwindow.h \
 
 mainwindow.o: ../ProxyServer/mainwindow.cpp ../ProxyServer/mainwindow.h \
 		../ProxyServer/proxyserver.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../ProxyServer/resposta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../ProxyServer/mainwindow.cpp
 
 proxyserver.o: ../ProxyServer/proxyserver.cpp ../ProxyServer/proxyserver.h \
@@ -350,6 +355,10 @@ proxyserver.o: ../ProxyServer/proxyserver.cpp ../ProxyServer/proxyserver.h \
 
 requisicao.o: ../ProxyServer/requisicao.cpp ../ProxyServer/requisicao.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o requisicao.o ../ProxyServer/requisicao.cpp
+
+resposta.o: ../ProxyServer/resposta.cpp ../ProxyServer/resposta.h \
+		../ProxyServer/requisicao.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o resposta.o ../ProxyServer/resposta.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -10,7 +10,7 @@
 #include <netdb.h>
 #include <errno.h>
 #define PORT 8080
-#define maxBufferSize 1024
+#define maxBufferSize 100000
 using namespace std;
 string convertToIpv6(string);
 string convertToString(char*, int);
@@ -24,5 +24,6 @@ public:
     void clienteConnection(string, char[]);
     string abreConexaoBrowser();
     string enviaBrowser(string);
+    void respostaParaBrowser(string);
 };
 #endif // PROXYSERVER_H

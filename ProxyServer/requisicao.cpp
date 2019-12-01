@@ -53,10 +53,9 @@ Requisicao::Requisicao(string strq) {
     metodo = primeiralinha[0];
     url = primeiralinha[1];
     protocolo = primeiralinha[2];
-    qDebug() << protocolo.c_str();
     for(int i=1; i<campos.size(); i++) {
         primeiralinha = splitaTitulo(campos[i], " ");
-        camposReq[primeiralinha[0]] = primeiralinha[1];
+        camposReq.push_back(make_pair(primeiralinha[0], primeiralinha[1]));
     }
 
 };
@@ -69,10 +68,10 @@ string Requisicao::reqParaUi() {
     envio.append(" ");
     envio.append(protocolo);
     envio.append("\r\n");
-    for(map<string, string>::iterator itt = camposReq.begin(); itt!=camposReq.end(); itt++) {
-        envio.append(itt->first);
+    for(int j=0; j<camposReq.size(); j++) {
+        envio.append(camposReq[j].first);
         envio.append(" ");
-        envio.append(itt->second);
+        envio.append(camposReq[j].second);
         envio.append("\r\n");
     }
     envio.append("\r\n");
@@ -82,8 +81,8 @@ string Requisicao::reqParaUi() {
 
 void Requisicao::matarConexao() {
     // remover o keep alive
-    camposReq["Connection:"] = "close";
-    camposReq["Accept-Encoding:"] = "identity";
+    camposReq[6].second = "close";
+    camposReq[4].second = "identity";
 }
 
 Requisicao::Requisicao() {

@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>SendToBrowser</string>
+     <string>SendToWeb</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -32,12 +32,12 @@
      <rect>
       <x>230</x>
       <y>560</y>
-      <width>83</width>
+      <width>111</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>Butao 2</string>
+     <string>SendToBrow</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -58,7 +58,7 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>771</width>
+      <width>481</width>
       <height>531</height>
      </rect>
     </property>
@@ -66,10 +66,10 @@
    <widget class="QTextEdit" name="textEdit_2">
     <property name="geometry">
      <rect>
-      <x>1010</x>
+      <x>683</x>
       <y>10</y>
-      <width>104</width>
-      <height>151</height>
+      <width>601</width>
+      <height>531</height>
      </rect>
     </property>
    </widget>
