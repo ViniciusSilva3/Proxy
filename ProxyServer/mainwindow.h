@@ -20,6 +20,7 @@ public:
     QString header1;
     QString header2;
     string msgBrowser;
+    string msgfromWeb;
 
 
 private slots:

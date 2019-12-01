@@ -19,12 +19,12 @@
      <rect>
       <x>60</x>
       <y>560</y>
-      <width>83</width>
+      <width>121</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>Butao 1</string>
+     <string>SendToBrowser</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">

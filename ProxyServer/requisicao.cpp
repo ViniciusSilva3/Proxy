@@ -1,4 +1,5 @@
 #include "requisicao.h"
+#include <QDebug>
 using namespace std;
 
 vector<string> splita(string str, const char * determinado) {
@@ -14,6 +15,8 @@ vector<string> splita(string str, const char * determinado) {
         ultimo = achado;
         achado = str.find(determinado, ultimo+offset);
     }
+    if((ultimo+offset) < str.length())
+        tokens.push_back(str.substr(ultimo+offset, str.length()));
     return tokens;
 }
 
@@ -24,6 +27,7 @@ vector<string> splitaTitulo(string str, const char * determinado) {
 
     size_t achado = str.find(determinado);
     if(achado > (str.length()-offset)) {
+        tokens.push_back(str);
         tokens.push_back(str);
         return tokens;
     }
@@ -49,7 +53,7 @@ Requisicao::Requisicao(string strq) {
     metodo = primeiralinha[0];
     url = primeiralinha[1];
     protocolo = primeiralinha[2];
-
+    qDebug() << protocolo.c_str();
     for(int i=1; i<campos.size(); i++) {
         primeiralinha = splitaTitulo(campos[i], " ");
         camposReq[primeiralinha[0]] = primeiralinha[1];
@@ -81,3 +85,10 @@ void Requisicao::matarConexao() {
     camposReq["Connection:"] = "close";
     camposReq["Accept-Encoding:"] = "identity";
 }
+
+Requisicao::Requisicao() {
+    metodo = "GET";
+    protocolo = "HTTP/1.1";
+    url = "";
+    corpo = "";
+};

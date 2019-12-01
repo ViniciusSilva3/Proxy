@@ -47,7 +47,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(60, 560, 83, 28));
+        pushButton->setGeometry(QRect(60, 560, 121, 28));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(230, 560, 83, 28));
@@ -83,7 +83,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("MainWindow", "Butao 1", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "SendToBrowser", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Butao 2", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWindow", "Butao 3", Q_NULLPTR));
         pushButton_4->setText(QApplication::translate("MainWindow", "OpenC", Q_NULLPTR));

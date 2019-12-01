@@ -1,14 +1,41 @@
 #include "proxyserver.h"
 #include <QDebug>
 #include "requisicao.h"
-int server_fd, new_socket, valread, valTotal=0;
+int server_fd, new_socket, sock, valread, valTotal=0;
 struct sockaddr_in address;
+struct sockaddr_in serv_addr;
 int opt = 1;
 int addrlen = sizeof(address);
 char buffer[maxBufferSize] = { 0 };
 char bufretorno[maxBufferSize+1];
 ssize_t size_read, size_cur;
 string Hname;
+string convertToIpv6( string str1) {
+    char *IPbuffer;
+    struct hostent *host_entry;
+    const char *nome = str1.c_str();
+
+    host_entry = gethostbyname(nome);
+
+    //std::cout <<str2 << std::endl;
+    // To convert an Internet network
+    // address into ASCII string
+    IPbuffer = inet_ntoa(*((struct in_addr*)
+                           host_entry->h_addr_list[0]));
+
+
+    return IPbuffer;
+}
+
+string convertToString(char *a, int size) {
+    int i;
+    string s="";
+    for(i=0; i<size;i++) {
+        //qDebug() << i;
+        s = s + a[i];
+    }
+    return s;
+}
 void proxy_server::start(void)
 {
 
@@ -59,13 +86,78 @@ string proxy_server::abreConexaoBrowser(void) {
         /* Aqui vai ter que ser adicionado ler so o header, se for chunked, fazeer com while */
 
         valread = read(new_socket, buffer, sizeof(buffer)); //Blocked until message is sent from the client
-
+        //qDebug() << buffer;
+        if( valread > 0) {
+         qDebug() << " 3";
         /* converte para string para pegar o nome do host */
-        string b1(buffer);
+        string b1;
+        int buf_size = sizeof(buffer)/sizeof(char);
+        b1 = convertToString(buffer, buf_size);
         Requisicao rq = Requisicao(b1);
         rq.matarConexao();
         qDebug() << "msg sent";
         return rq.reqParaUi();
-
+    }
+        Requisicao rq = Requisicao();
+        rq.metodo = "POST";
+        return rq.reqParaUi();
 
 }
+
+string proxy_server::enviaBrowser(string r1) {
+
+        std::string h1, request;
+        request = r1;
+        if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        {
+            printf("\n Socket creation error \n");
+            exit(1);
+        }
+        Requisicao rqst = Requisicao(r1);
+        string host = rqst.camposReq["Host:"];
+        h1 = convertToIpv6(host);
+
+        const char *adr_array = h1.c_str();
+
+        memset(&serv_addr, '0', sizeof(serv_addr));
+
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_port = htons(80);
+
+        // Convert IPv4 and IPv6 addresses from text to binary form
+        if (inet_pton(AF_INET, adr_array, &serv_addr.sin_addr) <= 0)
+        {
+            qDebug() << "\nInvalid address/ Address not supported";
+            exit(1);
+        }
+        qDebug() << "Press any key to connect to the server";
+            if (connect(sock, (struct sockaddr*) & serv_addr, sizeof(serv_addr)) < 0)
+            {
+                printf("\nConnection Failed \n");
+                exit(1);
+            }
+            qDebug() <<"Successfully connected to server. Press any key to send a message";
+
+            /* para enviar a mensagem, o conteudo deve estar em uma string, no caso 'hello', e deve
+                ser enviado junto o seu tamanho */
+            send(sock, request.c_str(), request.length(), 0);
+
+            char bf[1];
+            valTotal = read(sock, &bf, sizeof(bf));
+            string resposta;
+            int bf_size;
+            bf_size = sizeof(bf)/sizeof(char);
+            qDebug() << "aqui";
+            resposta = convertToString(bf, bf_size);
+            valTotal = read(sock, &bf, sizeof(bf));
+                while(valTotal > 0) {
+                    resposta.append(bf);
+                    valTotal = read(sock, &bf, sizeof(bf));
+                }
+            qDebug() << "fim";
+            QString str4 = QString::fromStdString(resposta);
+            qDebug() << str4;
+            return resposta;
+}
+
+

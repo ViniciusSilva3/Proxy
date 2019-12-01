@@ -16,7 +16,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    ui->textEdit->setText(porta);
+    msgfromWeb = server.enviaBrowser(msgBrowser);
     qDebug() << "lol";
 }
 

@@ -11,6 +11,7 @@ class Requisicao {
         map <string, string> camposReq;
 
         Requisicao(string);
+        Requisicao();
         string reqParaUi();
         void matarConexao();
 };
