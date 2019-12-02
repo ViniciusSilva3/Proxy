@@ -85,7 +85,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "SendToWeb", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "SendToBrow", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Butao 3", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
         pushButton_4->setText(QApplication::translate("MainWindow", "OpenC", Q_NULLPTR));
     } // retranslateUi
 

@@ -16,7 +16,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     proxy_server server;
-    QString porta;
+    int porta;
     QString header1;
     QString header2;
     string msgBrowser;
@@ -29,6 +29,8 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -20,7 +20,7 @@ class proxy_server {
 public:
     char h1[maxBufferSize+1];
     char h2[maxBufferSize+1];
-    void start(void);
+    void start(int);
     void clienteConnection(string, char[]);
     string abreConexaoBrowser();
     string enviaBrowser(string);

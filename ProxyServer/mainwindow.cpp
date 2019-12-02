@@ -23,25 +23,18 @@ void MainWindow::on_pushButton_clicked()
      * browser */
     /* para pegar a string da caixa de texto editada */
     QString   texto = ui->textEdit->toPlainText();
-     texto.replace("\n", "\r\n");
-    //qDebug() << texto;
-   //msgBrowser = texto.toUtf8().constData();
-    //QString x = QString::fromStdString(msgBrowser);
-    //qDebug() << x;
-    //Requisicao rq = Requisicao(msgBrowser);
-    //rq.matarConexao();
-    //msgBrowser = rq.reqParaUi();
+    texto.replace("\n", "\r\n");
+
     qDebug() << "Criou o novo text";
 
     // repassa para o servidor web
     msgfromWeb = server.enviaBrowser(msgBrowser);
         qDebug() << "nao chega";
-    /*Resposta rs = Resposta(msgfromWeb);
-    msgfromWeb = rs.montaRes();*/
+
     ui->textEdit_2->setPlainText(msgfromWeb.c_str());
     Resposta rs = Resposta(msgfromWeb);
     msgfromWeb = rs.montaRes();
-    //server.respostaParaBrowser(msgfromWeb);
+
     qDebug() << "lol";
 }
 
@@ -52,7 +45,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     qDebug() << "Button pressed";
     server = proxy_server();
-    server.start();
+    server.start(porta);
     msgBrowser = server.abreConexaoBrowser();
     ui->textEdit->setPlainText(msgBrowser.c_str());
 }
@@ -67,4 +60,11 @@ void MainWindow::on_pushButton_2_clicked()
     msgfromWeb   = texto.toUtf8().constData();
     server.respostaParaBrowser(msgfromWeb);
 
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    /* Limpa as caixas de texto */
+    ui->textEdit_2->clear();
+    ui->textEdit->clear();
 }

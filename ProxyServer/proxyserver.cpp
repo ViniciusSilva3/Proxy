@@ -36,7 +36,7 @@ string convertToString(char *a, int size) {
     }
     return s;
 }
-void proxy_server::start(void)
+void proxy_server::start(int Porta)
 {
 
     // Creating socket file descriptor
@@ -55,7 +55,7 @@ void proxy_server::start(void)
     }
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    address.sin_port = htons(Porta);
 
     // Forcefully attaching socket to the selected port
     if (bind(server_fd, (struct sockaddr*) & address,
